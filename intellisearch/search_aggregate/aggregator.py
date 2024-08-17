@@ -1,6 +1,6 @@
 import asyncio
-from intellisearch.search_aggr.news.google_news import GoogleNews
-from intellisearch.search_aggr.news.bing_news import BingNews
+from intellisearch.search_aggregate.news.google_news import GoogleNews
+from intellisearch.search_aggregate.news.bing_news import BingNews
 
 
 class SearchAggregator:

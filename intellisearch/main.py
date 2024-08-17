@@ -1,6 +1,6 @@
 import asyncio
 
-from intellisearch.search_aggr.aggregator import SearchAggregator
+from intellisearch.search_aggregate.aggregator import SearchAggregator
 
 if __name__ == "__main__":
     aggregator = SearchAggregator()

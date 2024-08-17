@@ -7,7 +7,7 @@ import feedparser
 from urllib.parse import urlencode
 import re
 import logging
-from intellisearch.search_aggr.dataclasses import NewsSearchResult
+from intellisearch.search_aggregate.dataclasses import NewsSearchResult
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
