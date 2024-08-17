@@ -4,10 +4,10 @@ from intellisearch.search_aggregate.news.bing_news import BingNews
 
 
 class SearchAggregator:
-    def __init__(self):
+    def __init__(self, num_results_per_engine: int = 10):
         self.google_news = GoogleNews()
         self.bing_news = BingNews()
-        self.num_results_per_engine = 10
+        self.num_results_per_engine = num_results_per_engine
 
     async def search(self, topic: str, interval_date: int):
         google_task = asyncio.create_task(self.google_news.fetch_news(
