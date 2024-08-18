@@ -7,7 +7,7 @@ import feedparser
 from urllib.parse import urlencode
 import re
 import logging
-from intellisearch.search_aggregate.dataclasses import NewsSearchResult
+from intellisearch.search_aggregate.dataclasses import NewsSearchResultItem
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -27,7 +27,7 @@ class GoogleNews:
                 response.raise_for_status()
                 return await response.text()
 
-    def _parse_xml_news(self, xml_content, num_results) -> List[NewsSearchResult]:
+    def _parse_xml_news(self, xml_content, num_results) -> List[NewsSearchResultItem]:
         feed = feedparser.parse(xml_content)
         news_list = []
 
@@ -41,15 +41,13 @@ class GoogleNews:
             pub_date = item.get('pubDate')
             description = parse_description(item.get('description'))
             source = item.get('source')
-
-            news_list.append(NewsSearchResult(
-                title=title,
-                url=link,
-                published_at=pub_date,
-                description=description,
-                source=source,
-                search_engine=['google_news']
-            ))
+            news_list.append({
+                'title': title,
+                'url': link,
+                'published_at': pub_date,
+                'description': description,
+                'source': source,
+            })
 
         return news_list
 
@@ -67,7 +65,7 @@ class GoogleNews:
 
         return time_range
 
-    async def fetch_news(self, topic='', country='US', language='en', num_results=10, time_range=None) -> List[NewsSearchResult]:
+    async def fetch_news(self, topic='', country='US', language='en', num_results=10, time_range=None) -> List[NewsSearchResultItem]:
         params = {
             'hl': language,
             'gl': country,
@@ -85,12 +83,18 @@ class GoogleNews:
         try:
             xml_content = await self._fetch_xml_content(url)
             results = self._parse_xml_news(xml_content, num_results)
+            result_dtos = []
             for result in results:
                 try:
-                    result.url = decoderv2(result.url)
+                    result_dtos.append(NewsSearchResultItem(
+                        **result,
+                        url=decoderv2(result['url']),
+                        search_engine='google_news',
+                        search_query=topic
+                    ))
                 except Exception:
-                    logger.error(f"Failed to decode URL: {result.url}")
-            return results
+                    logger.error(f"Failed to decode URL: {result['url']}")
+            return result_dtos
         except aiohttp.ClientError as e:
             print(f"Error fetching news: {e}")
             raise e

@@ -1,0 +1,59 @@
+Help refining the following input query for use in search engines like Google, Bing, or news aggregators. Based on the following classification types, identify which type best matches the input query, and then generate 3-5 refined queries for that classification. The goal is to optimize the query for search engines to find comprehensive and diverse information.
+
+<Classifications>
+1. Introductory or Broad Topic Queries: 
+Focus on breaking down broad topics into subtopics or trends.
+Example:
+Original Query: "Artificial Intelligence"
+Refined Queries: "Types of AI technologies," "AI trends in 2024," "Applications of AI in daily life"
+
+2. Narrow or Specific Queries: 
+Focus on expanding specific topics by providing related keywords or comparisons.
+Example:
+Original Query: "AI in Healthcare"
+Refined Queries: "AI for medical diagnostics," "Generative AI in drug discovery," "AI healthcare tools comparison"
+
+3. Question-based Queries: 
+Focus on variations of how-to, why, what, or comparison questions.
+Example:
+Original Query: "How to use AI in marketing"
+Refined Queries: "Best AI tools for digital marketing," "Implementing AI in marketing strategies," "AI-driven customer engagement"
+
+4. Geography-based Queries: 
+Focus on narrowing down by location, region, or contrasting global vs. local perspectives.
+Example:
+Original Query: "AI adoption"
+Refined Queries: "AI adoption in Asia," "AI trends in the United States," "European AI policies and regulations"
+
+5. Time-based Queries: 
+Focus on breaking down queries by historical, future, or current event perspectives.
+Example:
+Original Query: "AI evolution"
+Refined Queries: "AI advancements in the 2010s," "Future predictions for AI in 2030," "Recent AI breakthroughs in 2024"
+
+6. Sentiment-based Queries: 
+Focus on exploring opinions, debates, or sentiment analysis.
+Example:
+Original Query: "Public opinion on AI"
+Refined Queries: "Positive and negative perspectives on AI," "Ethical concerns around AI adoption," "Debates on AI and privacy issues"
+
+7. Role-based Queries: 
+Focus on tailoring queries to specific professions, skills, or roles.
+Example:
+Original Query: "AI for developers"
+Refined Queries: "AI programming languages for developers," "AI tools for software development," "AI frameworks for coders"
+</Classifications>
+
+Based on the classification type, refine the input query to make it more specific and actionable for the search engine. Provide distinct and diverse refinements that maximize the chances of finding relevant and comprehensive search results."
+
+<Input_Query>
+{{{ original_query }}}
+</Input_Query>
+
+<Json_Output>
+{
+    "classification": string, # your thought on the classification
+    "refine_emphasis": string, # your thought on what to emphasize for refined queries
+    "refined_queries": list[string] # the refined queries
+}
+</Json_Output>
