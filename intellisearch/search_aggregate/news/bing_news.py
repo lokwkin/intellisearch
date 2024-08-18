@@ -4,7 +4,7 @@ import feedparser
 from urllib.parse import urlencode, urlparse, parse_qs
 import logging
 
-from intellisearch.search_aggregate.dataclasses import NewsSearchResult
+from intellisearch.search_aggregate.dataclasses import NewsSearchResultItem
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -24,7 +24,7 @@ class BingNews:
                 response.raise_for_status()
                 return await response.text()
 
-    def _parse_xml_news(self, xml_content, num_results) -> List[NewsSearchResult]:
+    def _parse_xml_news(self, xml_content, num_results) -> List[NewsSearchResultItem]:
         feed = feedparser.parse(xml_content)
 
         news_list = []
@@ -36,19 +36,17 @@ class BingNews:
             pub_date = item.get('pubDate')
             description = item.get('description')
             source = item.get('News:Source')
-
-            news_list.append(NewsSearchResult(
-                title=title,
-                url=link,
-                published_at=pub_date,
-                description=description,
-                source=source,
-                search_engine=['bing_news']
-            ))
+            news_list.append({
+                'title': title,
+                'url': link,
+                'published_at': pub_date,
+                'description': description,
+                'source': source,
+            })
 
         return news_list
 
-    async def fetch_news(self, topic='', country='US', language='en', num_results=10, interval_date: int = None) -> List[NewsSearchResult]:
+    async def fetch_news(self, topic='', country='US', language='en', num_results=10, interval_date: int = None) -> List[NewsSearchResultItem]:
         params = {
             'format': 'rss',
             'setlang': language,
@@ -66,7 +64,12 @@ class BingNews:
         try:
             xml_content = await self._fetch_xml_content(url)
             results = self._parse_xml_news(xml_content, num_results)
-            return results
+            result_dtos = [NewsSearchResultItem(
+                **result,
+                search_engine='bing_news',
+                search_query=topic
+            ) for result in results]
+            return result_dtos
         except aiohttp.ClientError as e:
             print(f"Error fetching news: {e}")
             raise e
