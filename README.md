@@ -1,7 +1,7 @@
 # intellisearch
-Intellisearch is a search optimizer for developers, integrators, and AI agents, enhancing search results with LLM-driven query refinement, search aggregation, and advanced filtering to deliver tailored, credible information.
+***Ever experienced that when searching on Google, you often have to tweak or refine your keywords multiple times even for the same topic, and turns out the results are full of noises?*** 
 
-Ever experienced that when searching on Google, you often have to tweak or refine your keywords multiple times even for the same topic, and turns out the results are full of noises? Intellisearch aims to solve this problem by enhancing the pre and post-processing of search queries and results, and provide a more intelligent and efficient search experience. 
+**Intellisearch** aims to solve this problem by enhancing the pre and post-processing of search queries and results. It is a search optimizer for developers, integrators, and AI agents, to enhance search results by leveraging LLM-driven query refinement, search aggregation, and ML models filtering to deliver tailored, credible information and provide a more intelligent search experience. 
 
 ## What does it do?
 #### Query Refinement
